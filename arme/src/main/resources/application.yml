@@ -1,0 +1,6 @@
+spring:
+  application:
+    name: arme
+  data:
+    mongodb:
+      uri: mongodb://root:root@localhost:27018/skingambleur?authSource=admin

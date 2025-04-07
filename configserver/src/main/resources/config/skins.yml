@@ -1,0 +1,15 @@
+server:
+  port: 8000
+spring:
+  application:
+    name: skins
+  profiles:
+    active: native
+  datasource:
+    url: jdbc:mysql://localhost:3306/skingambleur
+    username: root
+    password: 1234
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
