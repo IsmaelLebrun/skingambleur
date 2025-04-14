@@ -32,8 +32,9 @@ public class SecurityConfig {
                         .loginPage("/login")
                         .defaultSuccessUrl("/home", true)
                         .loginProcessingUrl("/login-process")
-                        .permitAll())
-
+                        .usernameParameter("email")
+                        .permitAll()
+                )
                 .logout(LogoutConfigurer::permitAll);
 
         return http.build();

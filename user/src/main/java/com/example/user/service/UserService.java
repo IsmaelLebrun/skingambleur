@@ -5,6 +5,8 @@ import com.example.user.repository.UserRepository;
 import com.example.user.repository.client.UserMFeignClient;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class UserService {
     private final UserRepository userRepository;
@@ -16,7 +18,7 @@ public class UserService {
     }
 
     public String createUser(User user) {
-        if(userRepository.findByEmail(user.getEmail()) == null){
+        if(userRepository.findByEmail(user.getEmail()).isEmpty()){
             if(userRepository.findByPseudo(user.getPseudo()) == null){
                 User newUser = userRepository.save(user);
                 String result = userMFeignClient.createUser(newUser.getId());
@@ -30,5 +32,9 @@ public class UserService {
         }else{
             return "mailAlreadyExist";
         }
+    }
+
+    public Optional<User> findByEmail(String email) {
+        return userRepository.findByEmail(email);
     }
 }

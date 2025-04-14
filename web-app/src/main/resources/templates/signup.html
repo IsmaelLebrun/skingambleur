@@ -6,19 +6,29 @@
 <body>
 <div>
     <h1>S'inscrire</h1>
+    <div>
+        <p th:if="${param.error == 'errorCreatingUserM'}" style="color: red;">Une erreur est survenue lors de la création de l'utilisateur. Veuillez réessayer.</p>
+    </div>
     <form th:action="@{/signup-process}" method="post" th:object="${user}">
         <label for="email">Email: </label>
         <input type="text" id="email" th:field="*{email}">
+        <p th:if="${param.error == 'emailNotValid'}" style="color: red;">Adresse e-mail non valide.</p>
+        <p th:if="${param.error == 'mailAlreadyExist'}" style="color: red;">Cette adresse e-mail est déjà utilisée.</p>
         <label for="pseudo">Pseudo: </label>
         <input type="text" id="pseudo" th:field="*{pseudo}">
+        <p th:if="${param.error == 'pseudoAlreadyTaken'}" style="color: red;">Ce pseudo est déjà pris.</p>
+        <p th:if="${param.error == 'pseudoNotValid'}" style="color: red;">Pseudo non valide. Il doit contenir plus de 3 caractères.</p>
         <label for="password">Mot de passe: </label>
         <input type="password" id="password" th:field="*{password}">
+        <p th:if="${param.error == 'passwordNotValid'}" style="color: red;">Mot de passe non valide. Il doit contenir au moins 10 caractères, une lettre majuscule, une lettre minuscule, un chiffre, et un caractère spécial.</p>
         <label for="confirmPassword">Confirmer mot de passe: </label>
         <input type="password" id="confirmPassword" name="confirmPassword">
+        <p th:if="${param.error == 'passwordNotMatch'}" style="color: red;">Les mots de passe ne correspondent pas.</p>
 
-        <input type="submit" value="Se connecter">
-        <p>Pas de compte ?<a th:href="@{/signup}">S'inscrire</a></p>
+        <input type="submit" value="S'inscrire">
+        <p>Déjà un compte ? <a th:href="@{/login}">Se connecter</a></p>
     </form>
 </div>
 </body>
+
 </html>

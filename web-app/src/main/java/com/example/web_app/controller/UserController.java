@@ -11,10 +11,12 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.Date;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @Controller
 public class UserController {
-    private UserService userService;
+    private final UserService userService;
 
     public UserController(UserService userService) {
         this.userService = userService;
@@ -33,6 +35,18 @@ public class UserController {
 
     @PostMapping("/signup-process")
     public String signupProcess(@Valid @ModelAttribute("user") User user, @RequestBody String confirmPassword) {
+
+        // TODO : laisser commenter le temps de la phase de test
+//        if(user.getPseudo().isEmpty() || user.getPseudo().length() <= 3){
+//            return "redirect:/signup?error=pseudoNotValid";
+//        }
+//        if(!emailValidation(user.getEmail())){
+//            return "redirect:/signup?error=emailNotValid";
+//        }
+//        if(!passwordValidation(user.getPassword())){
+//            return "redirect:/signup?error=passwordNotValid";
+//        }
+
         if (!user.getPassword().equals(confirmPassword)) {
             user.setCreatedAt(new Date());
             BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
@@ -48,6 +62,20 @@ public class UserController {
         }else{
             return "redirect:/signup?error=passwordNotMatch";
         }
+    }
+
+    private boolean passwordValidation(String password) {
+        String passwordRegex = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{10,}$";
+        Pattern pattern = Pattern.compile(passwordRegex);
+        Matcher matcher = pattern.matcher(password);
+        return matcher.matches();
+    }
+
+    private boolean emailValidation(String email) {
+        String emailRegex = "^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$";
+        Pattern pattern = Pattern.compile(emailRegex);
+        Matcher matcher = pattern.matcher(email);
+        return matcher.matches();
     }
 
     @GetMapping("/home")
