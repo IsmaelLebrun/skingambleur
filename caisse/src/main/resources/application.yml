@@ -1,0 +1,7 @@
+spring:
+  application:
+    name: caisse
+  profiles:
+    active: git
+  config:
+    import: optional:configserver:http://localhost:8888/

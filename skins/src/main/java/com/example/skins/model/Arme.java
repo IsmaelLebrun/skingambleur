@@ -3,12 +3,8 @@ package com.example.skins.model;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import lombok.*;
-import org.springframework.data.mongodb.core.mapping.Document;
 import java.time.LocalDateTime;
 
-@Document(collection = "armes")
-@Entity
-@Data
 @Getter
 @Setter
 @NoArgsConstructor

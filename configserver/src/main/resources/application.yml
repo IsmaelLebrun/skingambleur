@@ -6,22 +6,12 @@ spring:
   cloud:
     config:
       server:
-        native:
-          search-locations: classpath:/config
+#        native:
+#          search-locations:  https://github.com/IsmaelLebrun/bankApplicationConfig
+        git:
+#          uri: https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com/IsmaelLebrun/bankApplicationConfig
+          clone-on-start: true
+          uri: https://github.com/IsmaelLebrun/skingambleurConfig
+          default-label: main
   profiles:
-    active: native
-management:
-  endpoints:
-    web:
-      exposure:
-        include: "*"
-  health:
-    readinessstate:
-      enabled: true
-    livenessstate:
-      enabled: true
-  endpoint:
-    health:
-      probes:
-        enabled: true
-
+    active: git

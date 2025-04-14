@@ -2,7 +2,13 @@
 <project version="4">
   <component name="Encoding">
     <file url="file://$PROJECT_DIR$/arme/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/caisse/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/configserver/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/eureka/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/skins/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/user/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/userM/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/web-app/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/web-app/src/main/resources/application.yml" charset="UTF-8" />
   </component>
 </project>

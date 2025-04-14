@@ -7,6 +7,11 @@
         <option value="$PROJECT_DIR$/skins/pom.xml" />
         <option value="$PROJECT_DIR$/arme/pom.xml" />
         <option value="$PROJECT_DIR$/configserver/pom.xml" />
+        <option value="$PROJECT_DIR$/caisse/pom.xml" />
+        <option value="$PROJECT_DIR$/eureka/pom.xml" />
+        <option value="$PROJECT_DIR$/user/pom.xml" />
+        <option value="$PROJECT_DIR$/web-app/pom.xml" />
+        <option value="$PROJECT_DIR$/userM/pom.xml" />
       </list>
     </option>
   </component>
