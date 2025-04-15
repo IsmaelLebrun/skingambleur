@@ -1,0 +1,94 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif; /* Font sans-serif */
+    background-color: #1a1a1a; /* Dark gray background */
+    color: #fff; /* White text */
+}
+
+header {
+    background-color: #2b2b2b; /* Slightly darker gray for the header */
+    padding: 1rem 2rem;
+    display: flex;
+    justify-content: flex-end; /* Align elements to the right */
+    align-items: center;
+}
+
+/* User Info Section */
+.user-info {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    background-color: #1a1a1a; /* Matches the body background */
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    position: relative;
+}
+
+/* Hexagonal Button for Add Money */
+.add-money-btn {
+    position: relative;
+    width: 3rem;
+    height: 3rem;
+    background-color: #ff7d1e; /* Orange */
+    color: #fff;
+    font-weight: bold;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    clip-path: polygon(
+            50% 0%,
+            100% 25%,
+            100% 75%,
+            50% 100%,
+            0% 75%,
+            0% 25%
+    ); /* Hexagonal shape */
+    cursor: pointer;
+    border: none;
+}
+
+.add-money-btn:hover {
+    background-color: #ffa54f; /* Lighter orange on hover */
+}
+
+/* Balance Display */
+.balance {
+    font-size: 1rem;
+    color: #ff7d1e; /* Same orange as button */
+    text-align: center;
+}
+
+/* Avatar Placeholder */
+.avatar {
+    width: 2.5rem;
+    height: 2.5rem;
+    background-color: #ccc; /* Gray for avatar */
+    border-radius: 50%; /* Makes it round */
+}
+
+/* Logout Button */
+.logout {
+    width: 2.5rem;
+    height: 2.5rem;
+    cursor: pointer;
+}
+
+/* Right Arrow Section */
+.arrow-container {
+    position: absolute;
+    top: 0;
+    right: -2rem; /* Adjust based on the size of the arrow */
+    height: 100%;
+    display: flex;
+    align-items: center;
+    background-color: #2b2b2b;
+    clip-path: polygon(
+            0% 0%,
+            100% 50%,
+            0% 100%,
+            0% 0%
+    ); /* Creates a triangular arrow shape */
+    padding-right: 2rem; /* For proper alignment */
+}

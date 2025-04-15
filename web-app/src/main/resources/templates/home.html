@@ -1,10 +1,24 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <title>Home</title>
+    <title>Skingambleur</title>
+    <link rel="stylesheet" th:href="@{/css/home.css}">
 </head>
 <body>
-<h1>Welcome Home</h1>
-<p>You are successfully logged in!</p>
+<header>
+    <div>
+        <!-- User Info Section -->
+        <div class="user-info">
+            <div class="balance-container">
+                <button class="add-money-btn">+</button>
+                <div class="balance">$ 210.35</div>
+            </div>
+            <div class="avatar"></div>
+            <img src="" alt="Logout" class="logout">
+            <!-- Right Arrow -->
+            <div class="arrow-container"></div>
+        </div>
+    </div>
+</header>
 </body>
 </html>
