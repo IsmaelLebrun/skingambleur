@@ -51,9 +51,4 @@ public class Skin {
     private Team team;
     private boolean legacy_model;
     private String image;
-
-    @CollectionTable(name = "caisses_skins", joinColumns = @JoinColumn(name = "skin_id"))
-    @JsonIgnore // Avoid recursive serialization
-    @ManyToMany
-    private List<CaisseDTO> caisses;
 }

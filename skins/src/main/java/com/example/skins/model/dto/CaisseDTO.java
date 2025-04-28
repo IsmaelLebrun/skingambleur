@@ -5,9 +5,7 @@ import lombok.*;
 
 @Getter
 @Setter
-@Entity
 public class CaisseDTO {
-    @Id
     private Integer id;
     private String name;
     private Long price;

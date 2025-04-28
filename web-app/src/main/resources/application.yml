@@ -5,3 +5,6 @@ spring:
     active: git
   config:
     import: optional:configserver:http://localhost:8888/
+cache:
+  file:
+    path: web-app/src/main/java/com/example/web_app/skins-cache/skins-cache.json

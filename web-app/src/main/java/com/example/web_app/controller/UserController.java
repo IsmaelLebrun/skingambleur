@@ -1,5 +1,7 @@
 package com.example.web_app.controller;
 
+import com.example.web_app.feign.CaisseFeignClient;
+import com.example.web_app.feign.SkinFeignClient;
 import com.example.web_app.model.User;
 import com.example.web_app.service.UserService;
 import jakarta.validation.Valid;
@@ -17,10 +19,16 @@ import java.util.regex.Pattern;
 @Controller
 public class UserController {
     private final UserService userService;
+    private CaisseFeignClient caisseFeignClient;
+    private SkinFeignClient skinFeignClient;
 
-    public UserController(UserService userService) {
+    public UserController(UserService userService, CaisseFeignClient caisseFeignClient, SkinFeignClient skinFeignClient) {
         this.userService = userService;
+        this.caisseFeignClient = caisseFeignClient;
+        this.skinFeignClient = skinFeignClient;
     }
+
+
 
     @GetMapping("/login")
     public String loginPage() {

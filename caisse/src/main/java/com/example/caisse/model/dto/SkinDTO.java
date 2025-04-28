@@ -1,16 +1,16 @@
 package com.example.caisse.model.dto;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
+@Data
 @Getter
 @Setter
-@Entity
+@AllArgsConstructor
 public class SkinDTO {
-    @Id
     private String id;
     private String name;
     private String description;
-
 }
