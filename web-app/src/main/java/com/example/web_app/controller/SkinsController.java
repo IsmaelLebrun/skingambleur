@@ -25,14 +25,6 @@ public class SkinsController {
     @PostMapping("/caisse/create")
     public boolean createCaisse(@RequestBody @Valid @ModelAttribute Caisse caisse){
 
-
-
-
-
-
-
-
-
         return true;
     }
 
