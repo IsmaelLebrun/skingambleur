@@ -50,25 +50,180 @@
 </main>
 <script>
     document.addEventListener('DOMContentLoaded', () => {
-        const searchBar = document.getElementById('search-bar');
+
+        function collectFormData() {
+            const caseName = document.getElementById("nom").value;
+            const casePrice = priceInput.value;
+            const caseType = document.getElementById("category").value;
+
+            // const skinList = document.getElementById("selected-skins");
+            // const skinsData = [];
+            // skinList.querySelectorAll('li').forEach(li => {
+            //     const liClone = li.cloneNode(true);
+            //     const button = liClone.querySelector('button');
+            //     if (button) {
+            //         liClone.removeChild(button);
+            //     }
+            //     skinsData.push(liClone.textContent.trim() + liClone.id);
+            // });
+            var skinsData = [
+                "MAC-10 | Amber Fade (Factory New) x50 19.18$",
+                "MAC-10 | Amber Fade (Factory New) x50 19.18$",
+                "MAC-10 | Amber Fade (Factory New) x20 19.18$",
+                "MAC-10 | Amber Fade (Factory New) x20 19.18$",
+                "MAC-10 | Amber Fade (Factory New) x20 19.18$",
+                "MAC-10 | Amber Fade (Factory New) x5 19.18$",
+                "MAC-10 | Amber Fade (Factory New) x5 19.18$",
+                "MAC-10 | Amber Fade (Factory New) x5 19.18$",
+                "MAC-10 | Amber Fade (Factory New) x2 19.18$",
+                "MAC-10 | Amber Fade (Factory New) x2 19.18$",
+                "MAC-10 | Amber Fade (Factory New) x2 19.18$",
+                "MAC-10 | Amber Fade (Factory New) x2 19.18$",
+                "MAC-10 | Amber Fade (Factory New) x2 19.18$",
+                "MAC-10 | Amber Fade (Factory New) x1.5 19.18$",
+                "MAC-10 | Amber Fade (Factory New) x1.5 19.18$",
+                "MAC-10 | Amber Fade (Factory New) x1.5 19.18$",
+                "MAC-10 | Amber Fade (Factory New) x1.5 19.18$",
+                "MAC-10 | Amber Fade (Factory New) x1.5 19.18$",
+                "MAC-10 | Amber Fade (Factory New) x1.5 19.18$",
+                "MAC-10 | Amber Fade (Factory New) x0.1 19.18$",
+                "MAC-10 | Amber Fade (Factory New) x0.1 19.18$",
+                "MAC-10 | Amber Fade (Factory New) x0.1 19.18$",
+            ]
+            return {
+                caseName,
+                casePrice,
+                caseType,
+                skins: skinsData
+            };
+        }
         const resultsDiv = document.getElementById('search-results');
         const selectedSkins = document.getElementById('selected-skins');
         const submitButton = document.getElementById('submit-btn');
-        let selectedSkinIds = [];
-
         let priceInput = document.querySelector('#prix');
         let categoryInput = document.querySelector('#category');
         const skinSearch = document.querySelector('#skin-search');
-
-        let selectedRadioValue = '';
         const radioContainer = document.createElement('div');
+        let selectedSkinIds = [];
+        let selectedRadioValue = '';
+
+        // Caché la barre de recherche au chargement de la page
+        showHideSkinSearchBar(priceInput);
+
 
         // Inject the radio container below the category select
         categoryInput.insertAdjacentElement('afterend', radioContainer);
 
-        priceInput.addEventListener('input', () => {
+        const displayResults = (skins, multiplier) => {
+            resultsDiv.innerHTML = '';
+            skins.forEach(skin => {
+                const div = document.createElement('div');
+                div.className = 'result-item';
+                const checkbox = document.createElement('input');
+                checkbox.type = 'checkbox';
+                checkbox.value = skin.id;
+                checkbox.id = `skin-${skin.id}-${multiplier}`;
+                checkbox.checked = selectedSkinIds.includes(skin.id);
+                checkbox.name = "checkbox"
+                checkbox.addEventListener('change', () => toggleSelection(skin, multiplier));
+                const label = document.createElement('label');
+                label.htmlFor = `skin-${skin.id}`;
+                label.textContent = skin.name + " ~ " + skin.suggested_price + "$";
+                div.appendChild(checkbox);
+                div.appendChild(label);
+                resultsDiv.appendChild(div);
+            });
+        };
+        const toggleSelection = (skin, multiplier) => {
+            if (selectedSkinIds.includes(skin.id)) {
+                selectedSkinIds = selectedSkinIds.filter(id => id !== skin.id);
+                removeSelectedSkin(skin);
+            } else {
+                selectedSkinIds.push(skin.id);
+                addSelectedSkin(skin, multiplier);
+            }
+        };
+        const addSelectedSkin = (skin, multiplier) => {
+            const li = document.createElement('li');
+            li.id = skin.id;
+            // Créez le contenu du LI avec le nom du skin
+            const textNode = document.createTextNode(skin.name + " x" + multiplier + " " + skin.suggested_price + "$");
+            // Créez le bouton de suppression
+            const removeButton = document.createElement('button');
+            removeButton.textContent = 'Remove'; // Texte du bouton
+            removeButton.style.marginLeft = '10px'; // Optionnel : ajoutez un espace entre le texte et le bouto
+            // Ajoutez un gestionnaire d'événement pour supprimer le LI
+            removeButton.addEventListener('click', () => {
+                li.remove(); // Supprime l'élément LI de la liste
+                selectedSkinIds = selectedSkinIds.filter(id => id !== skin.id); // Retirez l'ID du tableau
+            })
+            // Ajoutez le texte et le bouton au LI
+            li.appendChild(textNode);
+            li.appendChild(removeButton)
+            // Ajoutez le LI à la liste
+            selectedSkins.appendChild(li);
+        };
+        const removeSelectedSkin = (skin) => {
+            const li = document.getElementById(`selected-${skin.id}`);
+            if (li) li.remove();
+        };
+
+        function handleSearchBarInput(radio){
+            const searchBar = document.getElementById('search-bar');
+            const searchHandler = async () => {
+                const query = searchBar.value.trim();
+                if (query.length > 0) {
+                    try {
+                        const response = await fetch(`/skins/search?price=${priceInput.value}&query=${query}&multiplier=${radio.value}`);
+                        if (!response.ok) {
+                            console.error(`HTTP error! status: ${response.status}`);
+                        }
+                        const data = await response.json(); // Transformez la réponse en JSON
+                        displayResults(data, radio.value);
+                    } catch (error) {
+                        console.error('Error fetching skins:', error);
+                    }
+                    const checkboxes = document.querySelectorAll('input[name="checkbox"]');
+                    checkboxes.forEach((checkbox) => {
+                        checkbox.addEventListener('change', () => {
+                            limitResultSelect(categoryInput.value, radio.value);
+                        });
+                    });
+                } else {
+                    resultsDiv.innerHTML = '<p>Aucun résultat.</p>';
+                }
+            };
+            searchBar.removeEventListener('input', searchHandler);
+            searchBar.addEventListener('input', searchHandler);
+        }
+        function handleRadioChange(){
+            showHideSkinSearchBar(priceInput);
+            setupRadioButtons(categoryInput.value);
+            const regex = /^[+-]?\d+(\.\d+)?$/;
+            if (document.querySelectorAll('input[name="checkbox"]:checked')) {
+                document.querySelectorAll('input[name="checkbox"]').forEach(checkbox => {
+                    checkbox.checked = false;
+                    checkbox.disabled = true;
+                    checkbox = null;
+                });
+            }
+            const radios = document.querySelectorAll('input[name="price-tier"]');
+            if(radios[0].checked){
+                handleSearchBarInput(radios[0]);
+            }
+            radios.forEach((radio) => {
+                radio.addEventListener("change", () => {
+                    if (regex.test(priceInput.value) && radio.checked) {
+                        selectedRadioValue = radio.value; // Mettez à jour la valeur
+                        handleSearchBarInput(radio);
+                    }
+                });
+            });
+
+        }
+        function handlePriceInput(){
             const price = parseFloat(priceInput.value);
-            if (price > 100) {
+            if (price > 300) {
                 disableCategoryOption('volatile');
             } else {
                 enableCategoryOption('volatile');
@@ -78,52 +233,75 @@
             } else {
                 enableCategoryOption('faible');
             }
-        });
+            resetCategoryOption();
+            categoryInput.value = "default";
+            categoryInput.addEventListener('change', handleRadioChange);
+        }
 
-        categoryInput.addEventListener('change', () => {
-            updateRadioButtons(categoryInput.value);
-        });
+        priceInput.addEventListener('change', handlePriceInput);
 
-        function updateRadioButtons(category) {
-            radioContainer.innerHTML = ''; // Clear existing radio buttons
+        function resetCategoryOption() {
+            const selectElement = document.getElementById('category');
+            selectElement.value = 'default';
+            hideForm();
+        }
+        function hideForm() {
+            skinSearch.style.display = 'none';
+            setupRadioButtons();
+        }
+        function setupRadioButtons(category) {
+            /*
+            authorize skin number by multiplier :
+            50 : 2
+            20 : 3
+            5: 3
+            2 : 5
+            1.5 : 6
+            0.1 : 3
+             */
+            const radioConfigs = {
+                'volatile': [
+                    { label: 'Vedette (x50) 0.05%', value: '50' },
+                    { label: 'Super High (x20) 0.55%', value: '20' },
+                    { label: 'High (x5) 1.5%', value: '5' },
+                    { label: 'Medium (x2) 3.9%', value: '2' },
+                    { label: 'Low (x1.5) 19%', value: '1.5' },
+                    { label: 'Trash (x0.1) 75%', value: '0.1' },
+                ],
+                'moyen': [
+                    { label: 'Super High (x20)', value: '20' },
+                    { label: 'Low (x1.5)', value: '1.5' },
+                    { label: 'Trash (x0.7~3)', value: '0.5' },
+                    { label: 'Super Trash (x0.1)', value: '0.1' },
+                ],
+                'faible': [
+                    { label: 'Low (x1.5)', value: '1.5' },
+                    { label: 'Trash (x0.7~3)', value: '0.5' },
+                ],
+                'default': [],
+            };
 
-            const radios = [];
-            if (category === 'volatile') {
-                radios.push({ label: 'Vedette (x50) 0.05%', value: '50' });
-                radios.push({ label: 'Super High (x20) 0.55%', value: '20' });
-                radios.push({ label: 'High (x5) 1.5%', value: '5' });
-                radios.push({ label: 'Medium (x2) 3.9%', value: '2' });
-                radios.push({ label: 'Low (x1.5) 19%', value: '1.5' });
-                radios.push({ label: 'Trash (x0.7~3) 75%', value: '0.5' });
-            } else if (category === 'moyen') {
-                radios.push({ label: 'Super High (x20)', value: '20' });
-                radios.push({ label: 'Low (x1.5)', value: '1.5' });
-                radios.push({ label: 'Trash (x0.7~3)', value: '0.5' });
-                radios.push({ label: 'Super Trash (x0.1)', value: '0.1' });
-            } else if (category === 'faible') {
-                radios.push({ label: 'Low (x1.5)', value: '1.5' });
-                radios.push({ label: 'Trash (x0.7~3)', value: '0.5' });
-            }
-
+            const radios = radioConfigs[category] || [];
+            updateRadioButtonsUI(radios);
+        }
+        function updateRadioButtonsUI(radios) {
+            radioContainer.innerHTML = '';
             radios.forEach(radio => {
                 const label = document.createElement('label');
-                label.for = 'price-tier';
                 const input = document.createElement('input');
                 input.type = 'radio';
                 input.name = 'price-tier';
-                input.id = 'price-tier-' + radio.value;
                 input.value = radio.value;
-                input.addEventListener('change', () => {
-                    selectedRadioValue = radio.value;
-                });
 
                 label.textContent = radio.label;
                 label.appendChild(input);
                 radioContainer.appendChild(label);
             });
 
-            if (radios.length > 0) {
-                radios[0].checked = true; // Select the first radio button by default
+
+
+            if (radios.length) {
+                radioContainer.querySelector('input').checked = true; // Par défaut
                 selectedRadioValue = radios[0].value;
             }
         }
@@ -132,165 +310,84 @@
             const option = categoryInput.querySelector(`option[value="${value}"]`);
             if (option) option.disabled = true;
         }
-
         function enableCategoryOption(value) {
             const option = categoryInput.querySelector(`option[value="${value}"]`);
             if (option) option.disabled = false;
         }
 
-        showHideSkinSearchBar(priceInput);
-        categoryInput.addEventListener('change', async () => {
-            showHideSkinSearchBar(priceInput);
-            const regex = /^[+-]?\d+(\.\d+)?$/;
-            if(regex.test(priceInput.value)){
-                try{
-                    searchBar.addEventListener('input', async () => {
-                        const selectedRadio = document.querySelector('input[name="price-tier"]:checked');
-                        const query = searchBar.value.trim();
-                        if (query.length > 0) {
-                            try {
-                                const response = await fetch(`/skins/search?price=${priceInput.value}&query=${query}&multiplier=${selectedRadio.value}`);
-                                if (!response.ok) {
-                                    throw new Error(`HTTP error! status: ${response.status}`);
-                                }
-                                const data = await response.json(); // Transformez la réponse en JSON
-                                console.log('Response data:', data); // Debug : vérifiez la structure des données
-                                displayResults(data, selectedRadio.value, categoryInput.value);
-                            } catch (error) {
-                                console.error('Error fetching skins:', error);
-                            }
-                        } else {
-                            resultsDiv.innerHTML = '';
-                        }
-                    });
-                    const displayResults = (skins, multiplier, category) => {
-                        let numberOfCheckableSkins = 0;
-                        switch (category) {
-                            case 'volatile':
-                                switch (multiplier) {
-                                    case '50':
-                                        numberOfCheckableSkins = 2;
-                                        break;
-                                    case '20':
-                                        numberOfCheckableSkins = 3;
-                                        break;
-                                    case '5':
-                                        numberOfCheckableSkins = 3;
-                                        break;
-                                    case '2':
-                                        numberOfCheckableSkins = 5;
-                                        break;
-                                    case '1.5':
-                                        numberOfCheckableSkins = 6;
-                                        break;
-                                    case '0.5':
-                                        numberOfCheckableSkins = 3;
-                                        break;
-                                    default:
-                                        break;
-                                }
-                                break;
-                            case 'moyen':
-                                switch (multiplier) {
-                                    case '20':
-                                        numberOfCheckableSkins = 1;
-                                        break;
-                                    case '1.5':
-                                        numberOfCheckableSkins = 10;
-                                        break;
-                                    case '0.5':
-                                        numberOfCheckableSkins = 11;
-                                        break;
-                                    case '0.1':
-                                        numberOfCheckableSkins = 1;
-                                        break;
-                                    default:
-                                        break;
-                                }
-                                break;
-                            case 'low':
-                                switch (multiplier) {
-                                    case '1.5':
-                                        numberOfCheckableSkins = 11;
-                                        break;
-                                    case '0.5':
-                                        numberOfCheckableSkins = 11;
-                                        break;
-                                    default:
-                                        break;
-                                }
-                        }
-
-                        resultsDiv.innerHTML = '';
-                        skins.forEach(skin => {
-                            const div = document.createElement('div');
-                            div.className = 'result-item';
-                            const checkbox = document.createElement('input');
-                            checkbox.type = 'checkbox';
-                            checkbox.value = skin.id;
-                            checkbox.id = `skin-${skin.id}`;
-                            checkbox.checked = selectedSkinIds.includes(skin.id);
-                            checkbox.addEventListener('change', () => toggleSelection(skin));
-                            const label = document.createElement('label');
-                            label.htmlFor = `skin-${skin.id}`;
-                            label.textContent = skin.name + " ~ " + skin.suggested_price + "$";
-                            div.appendChild(checkbox);
-                            div.appendChild(label);
-                            resultsDiv.appendChild(div);
-                        });
-                    };
-                    const toggleSelection = (skin) => {
-                        if (selectedSkinIds.includes(skin.id)) {
-                            selectedSkinIds = selectedSkinIds.filter(id => id !== skin.id);
-                            removeSelectedSkin(skin);
-                        } else {
-                            selectedSkinIds.push(skin.id);
-                            addSelectedSkin(skin);
-                        }
-                    };
-                    const addSelectedSkin = (skin) => {
-                        const li = document.createElement('li');
-                        li.textContent = skin.name;
-                        li.id = `selected-${skin.id}`;
-                        selectedSkins.appendChild(li);
-                    };
-                    const removeSelectedSkin = (skin) => {
-                        const li = document.getElementById(`selected-${skin.id}`);
-                        if (li) li.remove();
-                    };
-                    submitButton.addEventListener('click', async () => {
-                        const caisseName = prompt("Nom de la caisse :");
-                        if (!caisseName) return;
-                        const payload = {
-                            name: caisseName,
-                            skinIds: selectedSkinIds
-                        };
-                        const response = await fetch('/caisses', {
-                            method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/json'
-                            },
-                            body: JSON.stringify(payload)
-                        });
-                        if (response.ok) {
-                            alert("Caisse créée avec succès !");
-                            // Clear the form
-                            searchBar.value = '';
-                            resultsDiv.innerHTML = '';
-                            selectedSkins.innerHTML = '';
-                            selectedSkinIds = [];
-                        } else {
-                            alert("Erreur lors de la création de la caisse.");
-                        }
-                    });
-                }
-                catch (error) {
-                    console.log(error);
-                }
-            }else{
-                priceInput.innerHTML = priceInput.value + ".OO";
+        function limitResultSelect(category, multiplier){
+            let numberOfCheckableSkins = 0;
+            switch (category) {
+                case 'volatile':
+                    switch (multiplier) {
+                        case '50':
+                            numberOfCheckableSkins = 2;
+                            break;
+                        case '20':
+                            numberOfCheckableSkins = 3;
+                            break;
+                        case '5':
+                            numberOfCheckableSkins = 3;
+                            break;
+                        case '2':
+                            numberOfCheckableSkins = 5;
+                            break;
+                        case '1.5':
+                            numberOfCheckableSkins = 6;
+                            break;
+                        case '0.1':
+                            numberOfCheckableSkins = 3;
+                            break;
+                        default:
+                            break;
+                    }
+                    break;
+                case 'moyen':
+                    switch (multiplier) {
+                        case '20':
+                            numberOfCheckableSkins = 1;
+                            break;
+                        case '1.5':
+                            numberOfCheckableSkins = 10;
+                            break;
+                        case '0.5':
+                            numberOfCheckableSkins = 11;
+                            break;
+                        case '0.1':
+                            numberOfCheckableSkins = 1;
+                            break;
+                        default:
+                            break;
+                    }
+                    break;
+                case 'low':
+                    switch (multiplier) {
+                        case '1.5':
+                            numberOfCheckableSkins = 11;
+                            break;
+                        case '0.5':
+                            numberOfCheckableSkins = 11;
+                            break;
+                        default:
+                            break;
+                    }
             }
-        });
+
+            const checkedResultItems = document.querySelectorAll('input[type="checkbox"]:checked');
+            const resultItems = document.querySelectorAll('input[type="checkbox"]');
+
+
+            if (checkedResultItems.length >= numberOfCheckableSkins) {
+                // Désactiver les cases non cochées si la limite est atteinte
+                resultItems.forEach(result => {
+                    result.disabled = !result.checked; // Garder les cases cochées activées
+                });
+            } else {
+                resultItems.forEach(result => {
+                    result.disabled = false;
+                });
+            }
+        }
 
         function showHideSkinSearchBar(input){
             if(input.value.length === 0){
@@ -302,37 +399,12 @@
 
 
 
-        document.addEventListener('DOMContentLoaded', () => {
-            const form = document.getElementById('caisse-form');
-
-            form.addEventListener('submit', async (event) => {
-                event.preventDefault(); // Empêche le rechargement de la page
-                const formData = collectFormData();
-                console.log(formData); // Debug : vérifier les données
-                await sendFormData(formData);
-            });
-        });
-        function collectFormData() {
-            const nom = document.getElementById('nom').value.trim();
-            const prix = parseFloat(document.getElementById('prix').value);
-            const category = document.getElementById('category').value;
-            const selectedSkins = Array.from(document.querySelectorAll('#selected-skins li')).map(li => li.textContent);
-
-            return {
-                nom,
-                prix,
-                category,
-                skins: selectedSkins
-            };
-        }
-
         function resetForm() {
             document.getElementById('nom').value = '';
             document.getElementById('prix').value = '';
             document.getElementById('category').value = 'default';
             document.getElementById('selected-skins').innerHTML = '';
         }
-
         async function sendFormData(data) {
             try {
                 const response = await fetch('/caisse/create', {
@@ -359,8 +431,14 @@
                 alert('Impossible de contacter le serveur.');
             }
         }
-
+        const form = document.getElementById('caisse-form');
+        form.addEventListener('submit', async (event) => {
+            event.preventDefault(); // Empêche le rechargement de la page
+            const formData = collectFormData();
+            await sendFormData(formData);
+        });
     });
+
 
 </script>
 </body>

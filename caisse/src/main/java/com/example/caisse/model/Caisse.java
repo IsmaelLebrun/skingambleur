@@ -1,5 +1,6 @@
 package com.example.caisse.model;
 
+import com.example.caisse.model.dto.SkinDTO;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -13,19 +14,11 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Caisse {
-
-    public Caisse(String name, Long price) {
-        this.name = name;
-        this.price = price;
-    }
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String name;
-    private Long price;
-
-    @OneToMany(mappedBy = "caisse", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<CaisseSkin> caisseSkins = new ArrayList<>();
-//    private List<String> bestLastDrop;
+    private Double price;
+    private String category;
+    private List<CaisseSkin> skins;
 }

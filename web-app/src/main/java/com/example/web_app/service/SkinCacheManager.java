@@ -103,8 +103,6 @@ public class SkinCacheManager {
 
         // Configurer les headers
         HttpHeaders headers = new HttpHeaders();
-        headers.set("Accept-Encoding", "br");
-        headers.set("Authorization", "Basic " + "votre_base64_encoded_cred");
         String combined = clientId + ":" + clientSecret;
         String encodedData = Base64.getEncoder().encodeToString(combined.getBytes());
         headers.set("Authorization", "Basic " + encodedData);
