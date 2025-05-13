@@ -21,15 +21,5 @@ public class SkinsController {
     public List<SkinDTO> searchSkinsByPrice(@RequestParam Double price, @RequestParam String query, @RequestParam Double multiplier) {
         return skinService.skinSearch(query, price, multiplier);
     }
-
-    @PostMapping("/caisse/create")
-    public boolean createCaisse(@RequestBody @Valid @ModelAttribute Caisse caisse){
-
-        return true;
-    }
-
-
-
-
 }
 

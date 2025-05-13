@@ -1,6 +1,5 @@
 package com.example.caisse.model;
 
-import com.example.caisse.model.dto.SkinDTO;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -20,5 +19,14 @@ public class Caisse {
     private String name;
     private Double price;
     private String category;
-    private List<CaisseSkin> skins;
+
+    @Column(nullable = true)
+    @OneToMany(mappedBy = "caisse", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<CaisseSkins> caisseSkins = new ArrayList<>();
+
+    public Caisse(String name, Double price, String category) {
+        this.name = name;
+        this.price = price;
+        this.category = category;
+    }
 }

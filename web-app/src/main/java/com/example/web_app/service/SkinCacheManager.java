@@ -62,7 +62,7 @@ public class SkinCacheManager {
             }
             CacheData cache = objectMapper.readValue(cacheFile, CacheData.class);
             LocalDateTime lastRefresh = LocalDateTime.parse(cache.getDate(), FORMATTER);
-            if(cache.date == null || lastRefresh.plusMinutes(5).isBefore(LocalDateTime.now())){
+            if(cache.date == null || lastRefresh.plusMinutes(10).isBefore(LocalDateTime.now())){
                 saveCacheToFile(refreshCache());
             }
             return objectMapper.readValue(cacheFile, CacheData.class);

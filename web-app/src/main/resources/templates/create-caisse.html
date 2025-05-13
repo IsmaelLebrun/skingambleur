@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<main>
+  <a th:href="@{/home}">Home</a>
+  <div>
+    <form id="caisse-form" method="post">
+      <label for="nom">Nom: </label>
+      <input type="text" name="nom" id="nom">
+      <label for="image">Lien de l'image: </label>
+      <input type="text" name="nom" id="image">
+      <label for="prix">Prix: </label>
+      <input type="number" name="prix" id="prix">
+      <label for="category">Type de caisse</label>
+      <select name="category" id="category">
+        <option value="default">--Catégorie--</option>
+        <option value="volatile">Volatile</option>
+        <option value="moyen">Moyenne</option>
+        <option value="faible">Faible</option>
+      </select>
+      <div id="skin-search">
+        <h3>Rechercher des Skins</h3>
+        <label for="search-bar"></label>
+        <input type="text" id="search-bar" placeholder="Rechercher un skin...">
+        <div id="search-results"></div>
+        <h4>Skins sélectionnés :</h4>
+        <ul id="selected-skins"></ul>
+        <input type="submit" id="submit-btn" value="Créer la Caisse">
+      </div>
+    </form>
+  </div>
+  <div>
+  </div>
+</main>
+<script th:src="@{/js/createCaisse.js}"></script>
+</body>
+</html>

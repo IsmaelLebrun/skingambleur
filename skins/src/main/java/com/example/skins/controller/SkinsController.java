@@ -1,6 +1,7 @@
 package com.example.skins.controller;
 
 import com.example.skins.model.Skin;
+import com.example.skins.model.dto.CaisseSkinDTO;
 import com.example.skins.model.dto.SkinDTO;
 import com.example.skins.service.SkinImportService;
 import com.example.skins.service.SkinService;
@@ -34,6 +35,11 @@ public class SkinsController {
         return skinService.getSkinById(skinId);
     }
 
+    @PostMapping("/skins/getSkinByIdForCaisse")
+    public CaisseSkinDTO getSkinById(@RequestBody String skinId){
+        return skinService.getSKinByIdForCaisse(skinService.getSkinById(skinId));
+    }
+
     @PostMapping("skins/getAllSkins")
     public List<Skin> getAllSkins(){
         return skinService.getAllSkins();
@@ -43,8 +49,14 @@ public class SkinsController {
     public List<SkinDTO> searchSkins(@RequestBody String query) {
         List<Skin> skins = skinService.findByNameContainingIgnoreCaseLimitOne(query);
         return skins.stream()
-                .map(skin -> new SkinDTO(skin.getId(), skin.getName(), skin.getDescription()))
+                .map(skin -> new SkinDTO(skin.getId(), skin.getName()))
                 .collect(Collectors.toList());
+    }
+
+    @PostMapping("skins/searchByName")
+    public String searchSkinByName(@RequestBody String query) {
+        Skin skin = skinService.findByNameContainingIgnoreCaseLimitOne(query).get(0);
+        return skin.getId();
     }
 
 

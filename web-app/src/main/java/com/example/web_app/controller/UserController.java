@@ -85,9 +85,4 @@ public class UserController {
         Matcher matcher = pattern.matcher(email);
         return matcher.matches();
     }
-
-    @GetMapping("/home")
-    public String homePage() {
-        return "home";
-    }
 }

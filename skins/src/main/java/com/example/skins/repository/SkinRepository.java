@@ -9,6 +9,7 @@ import org.springframework.data.jpa.repository.Query;
 import java.util.List;
 
 public interface SkinRepository extends JpaRepository<Skin, String> {
+
     List<Skin> findByNameContainingIgnoreCase(String query, Pageable pageable);
 
     @Query("SELECT s FROM Skin s")

@@ -9,20 +9,28 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
 public class Caisse {
-    private Integer id;
     private String name;
-    private Long price;
-    // format de reception des données des skins depuis la création de la caisse
-    private List<SkinsData> skin;
-    // format après formattage de skins;
-    private List<SkinDTO> skins_dto;
+    private Double price;
+    private String category;
+    private List<String> skins;
 
-    public Caisse(Integer id, String name, Long price, List<SkinsData> skins) {
-        this.id = id;
+    // TODO: add image
+    private String image;
+    //
+
+    private List<SkinDTO> skinDTOS;
+
+    public Caisse(String name, Double price, List<String> skins) {
         this.name = name;
         this.price = price;
-        this.skin = skins;
+        this.skins = skins;
+    }
+
+    public Caisse(List<SkinDTO> skinDTOS, String category, Double price, String name) {
+        this.skinDTOS = skinDTOS;
+        this.category = category;
+        this.price = price;
+        this.name = name;
     }
 }

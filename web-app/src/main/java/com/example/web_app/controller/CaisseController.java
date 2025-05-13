@@ -2,9 +2,12 @@ package com.example.web_app.controller;
 
 import com.example.web_app.model.Caisse;
 import com.example.web_app.service.CaisseService;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 @RestController
 public class CaisseController {

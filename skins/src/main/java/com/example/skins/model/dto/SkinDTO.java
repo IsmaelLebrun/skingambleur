@@ -16,5 +16,18 @@ import java.util.List;
 public class SkinDTO {
     private String id;
     private String name;
-    private String description;
+    private Integer multiplier;
+    private String state;
+    private Double suggested_price;
+    public SkinDTO(String name, Integer multiplier, String state) {
+        this.id = id;
+        this.name = name;
+        this.multiplier = multiplier;
+        this.state = state;
+    }
+
+    public SkinDTO(String id, String name) {
+        this.id = id;
+        this.name = name;
+    }
 }

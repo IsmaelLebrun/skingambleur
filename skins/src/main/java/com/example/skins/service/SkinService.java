@@ -1,6 +1,7 @@
 package com.example.skins.service;
 
 import com.example.skins.model.Skin;
+import com.example.skins.model.dto.CaisseSkinDTO;
 import com.example.skins.model.dto.SkinDTO;
 import com.example.skins.repository.SkinRepository;
 import org.springframework.data.domain.PageRequest;
@@ -34,5 +35,9 @@ public class SkinService {
     public List<Skin> getHundredSkin() {
         Pageable pageable = PageRequest.of(0, 100); // Page 0, limite 100
         return skinRepository.getHundredFirst(pageable);
+    }
+
+    public CaisseSkinDTO getSKinByIdForCaisse(Skin skin) {
+        return new CaisseSkinDTO(skin.getId(), skin.getName(), skin.getImage());
     }
 }
