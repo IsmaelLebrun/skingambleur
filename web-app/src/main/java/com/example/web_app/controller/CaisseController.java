@@ -1,6 +1,7 @@
 package com.example.web_app.controller;
 
 import com.example.web_app.model.Caisse;
+import com.example.web_app.model.dto.SkinDTO;
 import com.example.web_app.service.CaisseService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,5 +22,10 @@ public class CaisseController {
     @PostMapping("caisse/create")
     public boolean createCaisse(@RequestBody Caisse caisse) {
         return caisseService.createCaisse(caisse);
+    }
+
+    @PostMapping("caisse/getSkinsIdsByName")
+    public List<SkinDTO> getSkinsIdsByName(@RequestBody String caisseName){
+        return caisseService.getSkinsByCaisseName(caisseName);
     }
 }

@@ -1,35 +1,106 @@
+/* Styles généraux déjà présents */
+html,
 body {
+    overflow-x: hidden;
+    height: 100%;
+    width: 100%;
     margin: 0;
     padding: 0;
-    font-family: Arial, sans-serif; /* Font sans-serif */
-    background-color: #1a1a1a; /* Dark gray background */
-    color: #fff; /* White text */
+    font-family: Arial, sans-serif;
+    background-color: #1a1a1a;
+    color: #fff;
 }
 
 header {
-    background-color: #2b2b2b; /* Slightly darker gray for the header */
-    padding: 1rem 2rem;
+    background-color: #2b2b2b;
     display: flex;
-    justify-content: flex-end; /* Align elements to the right */
-    align-items: center;
+    flex-direction: column;
+    align-items: stretch;
+    padding: 0; /* plus de padding sur le header */
+    width: 100%;
 }
+.header-top,
+.header-bottom {
+    width: 100%;
+}
+
+/* Si tu veux que le contenu du top soit organisé gauche/droite */
+.header-top {
+    padding: 1rem 2rem; /* padding interne pour que les éléments ne touchent pas les bords */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: solid 7px #1a1a1a;
+}
+
+.header-bottom {
+    display: flex;
+    flex-direction: row;
+    background-color: #1a1a1a;
+    padding: 0; /* pas de padding, touche les bords */
+    height: 3vh;
+    width: 100%;
+    gap: 0.4%;
+}
+
+.header-bottom > div {
+    width: 34%;
+    height: 100%;
+}
+
+.header-bottom-btns{
+    border: none;
+    background-color: #2b2b2b;
+    width: 100%;
+    height: 100%;
+    color: whitesmoke;
+    cursor: pointer;
+    transition: 0.1s;
+}
+
+.header-bottom-btns:hover{
+    background-color: #464646;
+    transition: 0.1s;
+}
+
+.skinsgambleur {
+    font-family: "Poppins", Arial, sans-serif;
+    font-weight: 700;
+    font-style: italic;
+    text-transform: uppercase;
+    letter-spacing: -0.03em; /* Lettres plus proches */
+    margin: 0;
+
+    background: linear-gradient(to bottom, #ff8a00, #000000); /* Dégradé vertical */
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    -webkit-text-fill-color: transparent;
+    -webkit-text-stroke: 3px #000000;
+
+    font-size: clamp(24px, 4vw, 48px);
+}
+
 
 /* User Info Section */
 .user-info {
     display: flex;
     align-items: center;
     gap: 1rem;
-    background-color: #1a1a1a; /* Matches the body background */
+    background-color: #1a1a1a;
     padding: 0.5rem 1rem;
     border-radius: 0.5rem;
     position: relative;
+    margin-right: 3rem;
 }
+
+/* ... tes autres styles inchangés ... */
 
 /* Hexagonal Button for Add Money */
 .add-money-btn {
     position: relative;
-    width: 3rem;
-    height: 3rem;
+    width: 2.8rem;
+    height: 2.8rem;
     background-color: #ff7d1e; /* Orange */
     color: #fff;
     font-weight: bold;
@@ -66,6 +137,7 @@ header {
     height: 2.5rem;
     background-color: #ccc; /* Gray for avatar */
     border-radius: 50%; /* Makes it round */
+    cursor: pointer;
 }
 
 /* Logout Button */
@@ -91,4 +163,106 @@ header {
             0% 0%
     ); /* Creates a triangular arrow shape */
     padding-right: 2rem; /* For proper alignment */
+}
+
+
+
+
+
+
+
+
+
+
+
+/* Container des cartes */
+.container {
+    width: 90%;
+    margin: 2rem auto;
+}
+
+/* Grid pour les cartes */
+.cards {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 0.5rem; /* réduit l'écart entre les cartes */
+}
+
+/* Chaque carte */
+.card {
+    text-align: center;
+    color: #fff;
+    cursor: pointer;
+    padding: 0.2rem; /* plus rapproché */
+}
+
+/* Image des cartes */
+.card-image {
+    height: 20vh; /* augmenté */
+    width: auto;
+    object-fit: cover;
+    margin-bottom: 0.2rem; /* rapproché du titre */
+}
+
+/* Titres des cartes */
+.card-title {
+    font-size: 1rem;
+    margin: 0.1rem 0; /* très proche de l'image et du prix */
+}
+
+/* Prix des cartes avec rectangle */
+.card-price {
+    display: inline-block;
+    padding: 0.2rem 0.5rem;
+    font-size: 0.9rem;
+    color: #ff7d1e;
+    background-color: rgba(255, 125, 30, 0.2); /* Orange transparent */
+    border: 2px solid #ff7d1e;
+    transition: all 0.3s ease;
+}
+
+.card:hover{
+    .card-price{
+        background-color: #ff7d1e;
+        color: #492e1a;
+    }
+}
+
+/* Container général */
+.create-caisse-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 90%;
+    max-width: 600px;
+    margin: 3rem auto;
+    padding: 2rem;
+    background-color: #2b2b2b;
+    box-shadow: 0 0 10px rgba(0,0,0,0.5); /* optionnel pour le contour */
+    gap: 1.5rem; /* espace entre image et bouton */
+    border-radius: 5px;
+}
+
+/* Image centrée */
+.create-caisse-image {
+    max-height: 20vh;
+    width: auto;
+}
+
+/* Bouton de création de caisse */
+.create-caisse-btn {
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    color: #ff7d1e;
+    background-color: rgba(255, 125, 30, 0.2);
+    border: 2px solid #ff7d1e;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+}
+
+.create-caisse-btn:hover {
+    background-color: #ff7d1e;
+    color: #492e1a;
 }

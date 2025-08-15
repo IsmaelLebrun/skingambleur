@@ -5,6 +5,27 @@ spring:
     active: git
   config:
     import: optional:configserver:http://localhost:8888/
+  devtools:
+    livereload:
+      enabled: true
+    restart:
+      enabled: true
 cache:
   file:
     path: web-app/src/main/java/com/example/web_app/skins-cache/skins-cache.json
+eureka:
+  instance:
+    hostname: localhost
+    prefer-ip-address: true
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://localhost:8070/eureka/
+logging:
+  level:
+    org:
+      springframework:
+        security: DEBUG
+
+

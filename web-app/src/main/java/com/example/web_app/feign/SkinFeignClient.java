@@ -19,4 +19,7 @@ public interface SkinFeignClient {
 
     @RequestMapping(method = RequestMethod.POST, value = "skins/getHundred", consumes = "application/json")
     List<SkinDTO> getHundredFirst();
+
+    @RequestMapping(method = RequestMethod.POST, value = "skins/getSkinsByIds", consumes = "application/json")
+    List<SkinDTO> getSkinsByIds(List<String> ids);
 }

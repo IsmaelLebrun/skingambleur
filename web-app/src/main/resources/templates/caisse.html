@@ -2,6 +2,8 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="fr">
 <head>
     <title>Skingambleur</title>
+    <link rel="stylesheet" th:href="@{/css/home.css}">
+    <link rel="stylesheet" th:href="@{/css/caisse.css}">
 </head>
 <body>
 <header>
@@ -20,15 +22,70 @@
     </div>
 </header>
 <main>
-    <div>
-        <h1 th:text="${caisse.name}"></h1>
-<!--        <img th:src="${caisse.image}" alt="">-->
-        <p th:text="${caisse.price}"></p>
-        <button>Ouvrir</button>
-    </div>
-    <div>
+    <div id="caisse-container">
+        <h1 th:text="${caisse.name}" id="caisse-name"></h1>
+        <div id="caisse-content">
+<!--            <img th:src="${caisse.imageLink}" alt="" id="caisse-image">-->
+            <img th:src="@{/image/caisse.webp}" alt="" id="caisse-image">
+            <button onclick="ouvrirCaisse()" id="open-button">Ouvrir<span th:text="${caisse.price} + ' $'" id="caisse-price"></span></button>
+            <div id="skin-selection" class="skin-selection">
+
+            </div>
+            <div id="resultat-container" style="display: none;">
+                <!-- Cette div apparaîtra après le clic -->
+            </div>
+        </div>
 
     </div>
+<!--    <div class="skinsList">-->
+<!--        <h2>Skins disponibles</h2>-->
+<!--        <div>-->
+<!--            <div th:each="skin : ${skins}">-->
+<!--                <td th:text="${skin.image}"></td>-->
+<!--                <div style="background-color: ;"></div>-->
+<!--            </div>    -->
+<!--        </div>-->
+<!--    </div>-->
 </main>
+
+<script th:inline="javascript">
+
+    document.addEventListener('DOMContentLoaded', () => {
+        getSkin();
+    })
+
+    async function getSkin() {
+        const skins = await fetch('caisse/getSkinsIdsByName', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            name: document.getElementById('#caisse-name').value,
+          })
+        });
+        // image, rareté
+    }
+
+    function ouvrirCaisse() {
+        // Cacher les éléments
+        document.getElementById('caisse-image').style.display = 'none';
+        document.getElementById('caisse-price').style.display = 'none';
+        document.getElementById('open-button').style.display = 'none';
+
+        // Afficher la nouvelle div
+        const resultatContainer = document.getElementById('resultat-container');
+        resultatContainer.style.display = 'block';
+
+        // Créer le contenu pour la nouvelle div
+        resultatContainer.innerHTML = `
+        <div class="resultat">
+
+        </div>
+    `;
+    }
+</script>
+
+
 </body>
 </html>

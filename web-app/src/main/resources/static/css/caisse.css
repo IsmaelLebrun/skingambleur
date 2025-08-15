@@ -1,0 +1,110 @@
+/* Réinitialisation de base */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #1a1a1a;
+    color: #ffffff;
+    font-family: Arial, sans-serif;
+    min-height: 100vh;
+}
+
+
+/* Container principal de la caisse */
+#caisse-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100vh; /* Hauteur totale moins header */
+}
+/* Style du titre */
+#caisse-container h1 {
+    width: 100%;
+    height: 10%;
+    padding: 45px;
+    text-align: center;
+    background-color: rgb(31, 31, 31);
+}
+
+#caisse-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: rgb(49, 49, 49);
+    width: 100%;
+    height: calc(100% - 10% - 100px);
+    position: relative;
+}
+
+/* Style de l'image */
+#caisse-image {
+    max-width: 300px;
+    max-height: 300px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+/* Style du bouton */
+#open-button {
+    padding: 15px 40px;
+    margin-top: 450px; /* image height * 1.5 */
+    font-size: 18px;
+    font-weight: bold;
+    color: white;
+    background: linear-gradient(to bottom, #ff7f50, rgba(255, 127, 80, 0.8));
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 0 15px rgba(255, 127, 80, 0.5);
+    border: 2px solid #ff6347; /* Orange plus vif */
+}
+
+#open-button:hover {
+    background: linear-gradient(to bottom, #ff8c66, rgba(255, 140, 102, 0.8));
+    box-shadow: 0 0 20px rgba(255, 127, 80, 0.7);
+}
+
+/* Style pour le prix dans le bouton */
+#caisse-price {
+    margin-left: 10px;
+    font-weight: normal;
+}
+
+/* Animation pour le conteneur de résultat */
+#resultat-container {
+    width: 80%;
+    margin: 0 auto;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    #caisse-content {
+        width: 95%;
+    }
+
+    #caisse-image {
+        max-width: 200px;
+        max-height: 200px;
+    }
+
+    #open-button {
+        font-size: 16px;
+        padding: 12px 30px;
+    }
+}

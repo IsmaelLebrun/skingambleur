@@ -73,4 +73,7 @@ public class SkinService {
         return returnSkinDTOs;
     }
 
+    public List<SkinDTO> getSkinsByIds(List<String> ids) {
+        return skinFeignClient.getSkinsByIds(ids);
+    }
 }

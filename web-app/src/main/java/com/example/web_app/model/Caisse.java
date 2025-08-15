@@ -13,24 +13,32 @@ public class Caisse {
     private String name;
     private Double price;
     private String category;
-    private List<String> skins;
+    private List<String> skinsIds;
+    private List<SkinDTO> skins;
 
-    // TODO: add image
-    private String image;
-    //
+    //TODO images
+    private String imageLink;
 
-    private List<SkinDTO> skinDTOS;
 
-    public Caisse(String name, Double price, List<String> skins) {
-        this.name = name;
-        this.price = price;
-        this.skins = skins;
+    public static Caisse createCaisseWithSkins(String name, Double price, String category, List<SkinDTO> skins) {
+        Caisse caisse = new Caisse();
+        caisse.setName(name);
+        caisse.setPrice(price);
+        caisse.setCategory(category);
+        caisse.setSkins(skins);
+        return caisse;
     }
 
-    public Caisse(List<SkinDTO> skinDTOS, String category, Double price, String name) {
-        this.skinDTOS = skinDTOS;
-        this.category = category;
-        this.price = price;
+    public Caisse(String name, Double price, String category, List<String> skinsIds) {
         this.name = name;
+        this.price = price;
+        this.category = category;
+        this.skinsIds = skinsIds;
+    }
+
+    public Caisse(String name, Double price, String category) {
+        this.name = name;
+        this.price = price;
+        this.category = category;
     }
 }

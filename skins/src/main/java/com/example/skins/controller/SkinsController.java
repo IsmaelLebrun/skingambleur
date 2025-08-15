@@ -35,9 +35,9 @@ public class SkinsController {
         return skinService.getSkinById(skinId);
     }
 
-    @PostMapping("/skins/getSkinByIdForCaisse")
-    public CaisseSkinDTO getSkinById(@RequestBody String skinId){
-        return skinService.getSKinByIdForCaisse(skinService.getSkinById(skinId));
+    @PostMapping("/skins/getSkinsByIds")
+    public List<Skin> getSkinsByIds(@RequestBody List<String> skinIds){
+        return skinService.getSkinsByIds(skinIds);
     }
 
     @PostMapping("skins/getAllSkins")

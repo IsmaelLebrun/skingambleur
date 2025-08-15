@@ -6,29 +6,54 @@
 </head>
 <body>
 <header>
-    <div>
-        <!-- User Info Section -->
-        <div class="user-info">
-            <div class="balance-container">
+    <div class="header-top">
+        <p class="skinsgambleur">skinsgambleur</p>
+        <div>
+            <!-- User Info Section -->
+            <div class="user-info">
+                <div class="balance">€ 210.35</div>
                 <button class="add-money-btn">+</button>
-                <div class="balance">$ 210.35</div>
+                <div class="avatar"></div>
+                <img th:src="@{/image/deconnecter.png}" alt="Logout" class="logout">
             </div>
-            <div class="avatar"></div>
-            <img src="" alt="Logout" class="logout">
-            <!-- Right Arrow -->
-            <div class="arrow-container"></div>
+        </div>
+    </div>
+    <div class="header-bottom">
+        <div>
+            <button class="header-bottom-btns">
+                caisses
+            </button>
+        </div>
+        <div>
+            <button class="header-bottom-btns">
+                combat de caisses
+            </button>
+        </div>
+        <div>
+            <button class="header-bottom-btns">
+                amélioration
+            </button>
         </div>
     </div>
 </header>
 <main>
-    <a th:href="@{/create-caisse}">Créer une caisse</a>
-    <div class="caisses-container">
-        <div class="caisse-card" th:each="caisse : ${caisses}">
-            <img src="#" alt="image caisse" class="caisse-image">
-            <h2 th:text="${caisse.name}">Nom de la caisse</h2>
-            <p><strong>Prix :</strong> <span th:text="${caisse.price}">Prix de la caisse</span></p>
+    <div class="create-caisse-container">
+        <img th:src="@{/image/caisse.webp}" alt="Caisse" class="create-caisse-image">
+        <a th:href="@{/create-caisse}" class="create-caisse-btn">Créer ma caisse</a>
+    </div>
+    <div class="container">
+        <div class="cards" th:if="${not #lists.isEmpty(caisses)}">
+            <div class="card" th:each="caisse : ${caisses}" th:onclick="|window.location.href='@{/caisse/{name}(name=${caisse.name})}'|">
+                <img th:src="@{/image/caisse.webp}" th:alt="${caisse.name}" class="card-image">
+                <h3 class="card-title" th:text="${caisse.name}"></h3>
+                <p class="card-price" th:text="${#numbers.formatDecimal(caisse.price, 1, 2) + ' $'}"></p>
+            </div>
+        </div>
+        <div class="no-caisses" th:if="${#lists.isEmpty(caisses)}">
+            <p>Aucune caisse disponible</p>
         </div>
     </div>
 </main>
+
 </body>
 </html>

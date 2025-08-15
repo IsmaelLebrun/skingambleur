@@ -21,5 +21,9 @@ public class SkinsController {
     public List<SkinDTO> searchSkinsByPrice(@RequestParam Double price, @RequestParam String query, @RequestParam Double multiplier) {
         return skinService.skinSearch(query, price, multiplier);
     }
+
+    public List<SkinDTO> getSkinsByIds(@RequestBody List<String> ids){
+        return skinService.getSkinsByIds(ids);
+    }
 }
 

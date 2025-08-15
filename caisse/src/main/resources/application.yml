@@ -7,3 +7,15 @@ spring:
     active: git
   config:
     import: optional:configserver:http://localhost:8888/
+  data:
+    mongodb:
+      uri: mongodb://root:root@localhost:27018/caisses?authSource=admin
+eureka:
+  instance:
+    hostname: localhost
+    prefer-ip-address: true
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://localhost:8070/eureka/

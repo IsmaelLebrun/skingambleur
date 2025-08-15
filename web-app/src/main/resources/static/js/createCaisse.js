@@ -300,14 +300,14 @@ document.addEventListener('DOMContentLoaded', () => {
         const skinsData = [];
         const skinsList = document.querySelectorAll('#selected-skins li');
         skinsList.forEach(li => {
-            const text = li.childNodes[0].textContent.trim();
-            skinsData.push(text);
+            const skinId = li.getAttribute('data-skin-id');
+            skinsData.push(skinId);
         });
         return {
             name: caseName,
             price: casePrice,
             category: caseCategory,
-            skins: skinsData
+            skinsIds: skinsData
         };
     }
     function resetForm() {

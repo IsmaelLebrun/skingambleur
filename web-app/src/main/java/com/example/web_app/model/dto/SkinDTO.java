@@ -11,4 +11,5 @@ public class SkinDTO {
     private String description;
     private Double suggested_price;
     private String image;
+    private String rarity_name;
 }

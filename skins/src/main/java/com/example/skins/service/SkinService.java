@@ -40,4 +40,8 @@ public class SkinService {
     public CaisseSkinDTO getSKinByIdForCaisse(Skin skin) {
         return new CaisseSkinDTO(skin.getId(), skin.getName(), skin.getImage());
     }
+
+    public List<Skin> getSkinsByIds(List<String> skinIds) {
+        return skinRepository.findAllById(skinIds);
+    }
 }

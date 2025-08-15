@@ -2,16 +2,13 @@ package com.example.caisse.controller;
 
 import com.example.caisse.feign.SkinFeignClient;
 import com.example.caisse.model.Caisse;
-import com.example.caisse.model.dto.CaisseDTO;
 import com.example.caisse.model.dto.SkinDTO;
 import com.example.caisse.service.CaisseService;
 import jakarta.validation.Valid;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -26,8 +23,8 @@ public class CaisseController {
     }
 
     @PostMapping("/caisse/createCaisse")
-    public void createCaisse(@Valid @RequestBody CaisseDTO caisseDTO) {
-        caisseService.create(caisseDTO);
+    public void createCaisse(@Valid @RequestBody Caisse caisse) {
+        caisseService.create(caisse);
     }
 
     @PostMapping("/caisse/getAll")

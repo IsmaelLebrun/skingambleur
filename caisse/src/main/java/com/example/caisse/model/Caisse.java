@@ -1,12 +1,13 @@
 package com.example.caisse.model;
 
-import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@Entity
+@Document(collection = "caisse")
 @Data
 @Getter
 @Setter
@@ -14,15 +15,14 @@ import java.util.List;
 @AllArgsConstructor
 public class Caisse {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private String id;
     private String name;
     private Double price;
     private String category;
+    private List<String> skinsIds = new ArrayList<>();
 
-    @Column(nullable = true)
-    @OneToMany(mappedBy = "caisse", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<CaisseSkins> caisseSkins = new ArrayList<>();
+    //TODO mettre image
+    private String imageLink;
 
     public Caisse(String name, Double price, String category) {
         this.name = name;
